@@ -4,11 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinemas Star</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Taquillas Cinemas Star</h1>
-    <div>
-        <input type="">
+    <header class="menu">
+        <img class="logo" src="Images/logo.svg" alt="">
+        <nav class="nav-menu">
+            <ul class="principal">
+                <li>
+                    <a href="#" class="nav-link">Inicio</a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categorias <span class="arrow">▾</span> </a>
+                    <ul class="dropdown-content">
+                        <li><a href="#">Drama</a></li>
+                        <li><a href="#">Accion</a></li>
+                        <li><a href="#">Comedia</a></li>
+                        <li><a href="#">Terror</a></li>
+                    </ul>
+                </li>
+            
+
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Estrenos <span class="arrow">▾</span></a>
+                    <ul class="dropdown-content">
+                        <li><a href="#">Esta Semana</a></li>
+                        <li><a href="#">Proximos Estrenos</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="nav-link">Contacto</a>
+                </li>
+            </ul>    
+        </nav>
+
+        <div class="but-cart">
+            <button class="cartelera">Ver Cartelera</button>
+        </div>
+    </header>
+    
+    <div class="slider">
+        <img class="img-slider" src="Images/madalorian.jpg" alt="">
+        <img class="img-slider" src="Images/mario-galaxy.jpg" alt="">
+        <img class="img-slider" src="Images/michael.jpg" alt="">
+        <img class="img-slider" src="Images/moda.png" alt="">
+    </div>
+
+    <h2>Cartelera</h2>
+    <div class="movies">
+        <img src="Images/madalorian-poster.jpeg" alt="">
+        <img src="Images/mario-poster.jpg" alt="">
+        <img src="Images/moda-poster.jpeg" alt="">
+        <img src="Images/michael-poster.jpg" alt="">
     </div>
 </body>
 </html>
