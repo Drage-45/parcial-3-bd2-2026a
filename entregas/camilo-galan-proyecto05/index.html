@@ -16,18 +16,22 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropbtn">Categorias <span class="arrow">▾</span> </a>
+                    <button class="dropbtn">Confiteria <svg class="arrow" fill="currentColor"xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" >
+<path d="m18.57,11.18l-10-7c-.3-.21-.7-.24-1.04-.07-.33.17-.54.51-.54.89v14c0,.37.21.71.54.89.15.08.3.11.46.11.2,0,.4-.06.57-.18l10-7c.27-.19.43-.49.43-.82s-.16-.63-.43-.82Z"/>
+</svg> </button>
                     <ul class="dropdown-content">
-                        <li><a href="#">Drama</a></li>
-                        <li><a href="#">Accion</a></li>
-                        <li><a href="#">Comedia</a></li>
+                        <li><a href="#">Combo Amigos</a></li>
+                        <li><a href="#">Combo Familiar</a></li>
+                        <li><a href="#">Combo Gigante</a></li>
                         <li><a href="#">Terror</a></li>
                     </ul>
                 </li>
             
 
                 <li class="dropdown">
-                    <a href="#" class="dropbtn">Estrenos <span class="arrow">▾</span></a>
+                    <button class="dropbtn">Estrenos <svg class="arrow" fill="currentColor"xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" >
+<path d="m18.57,11.18l-10-7c-.3-.21-.7-.24-1.04-.07-.33.17-.54.51-.54.89v14c0,.37.21.71.54.89.15.08.3.11.46.11.2,0,.4-.06.57-.18l10-7c.27-.19.43-.49.43-.82s-.16-.63-.43-.82Z"/>
+</svg> </button>
                     <ul class="dropdown-content">
                         <li><a href="#">Esta Semana</a></li>
                         <li><a href="#">Proximos Estrenos</a></li>
@@ -45,19 +49,67 @@
         </div>
     </header>
     
-    <div class="slider">
-        <img class="img-slider" src="Images/madalorian.jpg" alt="">
-        <img class="img-slider" src="Images/mario-galaxy.jpg" alt="">
-        <img class="img-slider" src="Images/michael.jpg" alt="">
-        <img class="img-slider" src="Images/moda.png" alt="">
+    <div class="slider-container">
+            
+            <button class="slider-btn prev-btn">&#10094;</button>
+            <button class="slider-btn next-btn">&#10095;</button>
+
+            <div class="slider">
+                <img class="img-slider" src="Images/madalorian.jpg" alt="The Mandalorian">
+                <img class="img-slider" src="Images/mario-galaxy.jpg" alt="Mario Galaxy">
+                <img class="img-slider" src="Images/michael.jpg" alt="Michael Jackson">
+                <img class="img-slider" src="Images/moda.png" alt="Moda">
+            </div>
+
+            <div class="slider-indicators">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+            </div>
     </div>
 
-    <h2>Cartelera</h2>
-    <div class="movies">
-        <img src="Images/madalorian-poster.jpeg" alt="">
-        <img src="Images/mario-poster.jpg" alt="">
-        <img src="Images/moda-poster.jpeg" alt="">
-        <img src="Images/michael-poster.jpg" alt="">
-    </div>
+        <section id="seccion-cartelera" class="seccion-cartelera">
+        <h2 class="titulo-cartelera">En Cartelera</h2>
+        
+        <div class="movies">
+            <div class="movie-card">
+                <img src="Images/madalorian-poster.jpeg" alt="The Mandalorian">
+                <div class="movie-info">
+                    <h3>The Mandalorian</h3>
+                    <p>Acción / Sci-Fi</p>
+                    <button class="btn-comprar">Comprar Boletos</button>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <img src="Images/mario-poster.jpg" alt="Super Mario Bros">
+                <div class="movie-info">
+                    <h3>Super Mario Bros</h3>
+                    <p>Animación / Aventura</p>
+                    <button class="btn-comprar">Comprar Boletos</button>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <img src="Images/moda-poster.jpeg" alt="Película de Moda">
+                <div class="movie-info">
+                    <h3>El Diablo Viste a la Moda</h3>
+                    <p>Comedia / Drama</p>
+                    <button class="btn-comprar">Comprar Boletos</button>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <img src="Images/michael-poster.jpg" alt="Michael Jackson">
+                <div class="movie-info">
+                    <h3>Michael</h3>
+                    <p>Documental / Música</p>
+                    <button class="btn-comprar">Comprar Boletos</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="script.js"></script>
 </body>
 </html>
