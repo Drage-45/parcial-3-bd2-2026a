@@ -17,13 +17,13 @@ body{
     justify-content: space-between;
     align-items: center;
     background-color: #1a1a1a;
-    border-bottom: 3px solid #ffcc00;
+    border-bottom: 3px solid #ddb8f5;
 }
 
 .logo{
     margin: 0 100px 0 0;
-    height: 70px;
-    width: 250px;
+    height: 90px;
+    width: 200px;
     cursor: pointer;
 }
 
@@ -35,7 +35,7 @@ body{
     display: none;
     position: absolute;
     background-color: #1a1a1a;
-    min-width: 160px;
+    min-width: 220px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
     border-radius: 4px;
@@ -45,7 +45,7 @@ body{
 
 .dropdown-content a{
     color: white;
-    padding: 12px 0;
+    padding: 15px 25px;
     margin: 0;
     text-decoration: none;
     display: block;
@@ -54,7 +54,7 @@ body{
 
 .dropdown-content a:hover{
     background-color: #333333;
-    color: #ffcc00;
+    color: #ddb8f5;
 }
 
 .dropbtn{
@@ -83,7 +83,7 @@ body{
 }
 
  .dropbtn:hover, .nav-link:hover, .dropdown-content:hover{
-    color: #ffcc00;
+    color: #ddb8f5;
 }
 
 .principal{
@@ -114,13 +114,13 @@ a{
 }
 
 .dropdown:has(.dropdown-content.mostrar) .arrow{
-    fill: #fc0;
+    fill: #ddb8f5;
     transform: rotate(90deg);
 
 }
 
 .dropdown:has(.dropdown-content.mostrar, .arrow.mostrar) .dropbtn{
-    color: #ffcc00;
+    color: #ddb8f5;
 
 }
 
@@ -128,7 +128,7 @@ a{
     position: relative;
     font-size: 18px;
     border:2px solid #000000;
-    background-color: #ffcc00;
+    background-color: #ddb8f5;
     padding: 10px;
     margin: 0 0 0 100px;
     border-radius: 50px;
@@ -140,7 +140,7 @@ a{
 
 .cartelera:hover{
     background-color: rgb(0, 0, 0);
-    color: #ffcc00;
+    color: #ddb8f5;
 
 }
 
@@ -149,61 +149,147 @@ a{
     top:2px;
 }
 
-.slider{
-    display:flex;
+
+.slider {
+    display: flex;
     width: 100%;
-    height: 600px;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
 }
+
+.slide-item {
+    position: relative;
+    min-width: 100%;
+    flex: 0 0 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+.img-slider {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+
+.slide-overlay {
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    width: 100%;
+    height: 150px; 
+    padding: 60px 20px 30px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+    text-align: center;
+    opacity: 0;
+    transition: bottom 0.4s ease, opacity 0.4s ease;
+    pointer-events: none; 
+    z-index: 1; 
+}
+.slide-overlay h2 {
+    margin: 0;
+    font-size: 40px;
+    color: #ffffff;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
+}
+
+
+.slide-item::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: inset 0 0 0 rgba(0,0,0,0);
+    transition: box-shadow 0.4s ease;
+    pointer-events: none;
+}
+
+
+.slide-item:hover .img-slider {
+    transform: scale(1.08); 
+    filter: brightness(1.05) contrast(1.05);
+}
+
+.slide-item:hover .slide-overlay {
+    bottom: 0;
+    opacity: 1; 
+}
+
+.slide-item:hover::after {
+    box-shadow: inset 0 0 20px 20px var(--color-shadow);
+}
+
+
+
+.slide-overlay{
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 60px 20px 30px;
+    background: linear-gradient(to top,var(--color-shadow) 0%, rgba(20, 20, 20, 0.8) 60%, transparent 100%);
+    text-align: center;
+    pointer-events: none;
+}
+
+.slide-overlay h2{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    font-size: 40px;
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+    pointer-events: none;
+    z-index: 1;
+    width: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
 
 .slider::-webkit-scrollbar{
     display: none;
 }
 
-.img-slider{
-    width: 100%;
-    height: 100%;
-    flex: 0 0 100%;
-    object-fit: fill;
-    object-position: center top;
-    background-color: #141414;
-}
 
-.slider-container{
-    position: relative;
-    height: 600px;
-    width: 100%;
+.slider-container {
+    position: relative; 
+    width: 92%;
+    max-width: 1400px;
+    height: 430px;
     overflow: hidden;
+    margin: 35px auto;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5),
+    0 0 25px rgba(221,184,245,0.08);
+    border: 1px solid rgba(255,255,255,0.06);
 }
  
-.slider-btn{
+.slider-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0,0,0,0.5);
+    z-index: 9999 !important; /* Fuerza máxima prioridad */
+    background: rgba(0, 0, 0, 0.6);
     color: white;
     border: none;
-    font-size:24px;
-    padding: 15px 20px;
+    padding: 20px;
     cursor: pointer;
-    z-index: 5;
-    transition: background-color 0.3s ease;
-    border-radius: 4px;
+    border-radius: 10px;
 }
 
 .slider-btn:hover{
-    background-color:#fc0;
+    background-color:#ddb8f5;
     color: black;
 }
 
-.prev-btn{
-    left: 20px;
-}
-
-.next-btn{
-    right: 20px;
-}
+.prev-btn { left: 10px; }
+.next-btn { right: 10px; }
 
 .slider-indicators{
     position: absolute;
@@ -225,7 +311,7 @@ a{
 }
 
 .dot.active {
-    background-color: #ffcc00;
+    background-color: #ddb8f5;
     transform: scale(1.2);
 }
 
@@ -239,7 +325,7 @@ a{
     text-align: center;
     font-size:32px;
     margin-bottom: 40px;
-    color: #ffcc00;
+    color: #ddb8f5;
 }
 
 .movies{
@@ -252,7 +338,7 @@ a{
     background-color: #1a1a1a;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(221, 184, 254, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -261,7 +347,7 @@ a{
 
 .movie-card:hover{
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(255, 204, 0, 0.15);
+    box-shadow: 0 15px 30px var(--color-shadow);
 }
 
 .movie-card img{
@@ -293,7 +379,7 @@ a{
 
 .btn-comprar{
     margin-top: auto;
-    background-color: #ffcc00;
+    background-color: #ddb8f5;
     color: #000000;
     border: none;
     padding: 12px;
@@ -304,98 +390,651 @@ a{
 }
 
 .btn-comprar:hover{
-    background-color: #e6b800;
+    background-color: #cb00e6;
 }
 
-/* ASIENTOS PAGINA DE CINE */  
-
+/* =========================================
+   ESTILO CINEMÁTICO PROFESIONAL - ASIENTOS
+   ========================================= */
 
 .sala-cine {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 60px;
-    margin-bottom: 60px;
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 45px;
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(35,35,35,0.98) 0%,
+            rgba(20,20,20,1) 100%
+        );
+
+    border: 1px solid rgba(221,184,245,0.15);
+
+    box-shadow:
+        0 0 40px rgba(221,184,245,0.08),
+        0 15px 50px rgba(0,0,0,0.7);
+
+    position: relative;
+    overflow: hidden;
 }
 
-.sala-cine h2 {
-    margin-bottom: 50px;
-    font-weight: 600;
+/* Glow superior */
+.sala-cine::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 250px;
+
+    background: radial-gradient(
+        circle,
+        rgba(221,184,245,0.18) 0%,
+        transparent 70%
+    );
+
+    pointer-events: none;
 }
 
+#titullo-asientos,
+#titulo-asientos {
+    text-align: center;
+    font-size: 38px;
+    font-weight: 800;
+    color: #ddb8f5;
+    margin-bottom: 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 10px rgba(221,184,245,0.4),
+        0 0 25px rgba(221,184,245,0.2);
+}
+
+/* =========================================
+   PANTALLA DE CINE
+   ========================================= */
 
 .pantalla-curva {
-    width: 400px;
-    height: 60px;
-    background: transparent;
-    border-top: 4px solid #ffffff; 
-    border-radius: 50%; 
-    box-shadow: 0 -20px 40px -10px rgba(255, 255, 255, 0.4); 
-    margin-bottom: 40px;
+    width: 100%;
+    max-width: 750px;
+    height: 85px;
+
+    margin: 0 auto 70px auto;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #ffffff,
+            #d7d7d7
+        );
+
+    border-radius: 100% 100% 0 0 / 90px 90px 0 0;
+
+    /* Perspectiva MUCHO más suave */
+    transform:
+        perspective(900px)
+        rotateX(-30deg);
+
+    transform-origin: center bottom;
+
+    box-shadow:
+        0 0 25px rgba(255,255,255,0.3),
+        0 15px 35px rgba(221,184,245,0.15);
+
+    position: relative;
 }
 
+/* brillo cinematográfico */
+.pantalla-curva::after {
+    content: "";
+
+    position: absolute;
+
+    top: 8px;
+    left: 5%;
+    width: 90%;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.35);
+
+    filter: blur(8px);
+}
+
+/* =========================================
+   CONTENEDOR ASIENTOS
+   ========================================= */
+
+.contenedor-asientos {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    margin-bottom: 45px;
+
+    perspective: 1200px;
+}
 
 .fila {
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin-bottom: 12px;
+    align-items: center;
+    gap: 14px;
 }
 
+.fila-letra {
+    width: 35px;
 
-.pasillo {
-    width: 30px; 
+    color: #ddb8f5;
+
+    font-size: 18px;
+    font-weight: 700;
 }
 
+/* =========================================
+   ASIENTOS
+   ========================================= */
 
 .asiento {
-    background-color: #ffffff; 
-    height: 22px;
-    width: 26px;
-    margin: 0 4px; 
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    width: 48px;
+    height: 42px;
+
+    border-radius: 14px 14px 8px 8px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #525252 0%,
+            #343434 100%
+        );
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: rgba(255,255,255,0.65);
+
     cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
+/* Respaldo */
+.asiento::before {
+    content: "";
 
+    position: absolute;
+
+    top: 5px;
+    left: 5px;
+    right: 5px;
+
+    height: 10px;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,0.08);
+}
+
+/* Brillo */
+.asiento::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Hover */
 .asiento:hover:not(.ocupado) {
-    transform: scale(1.15);
+    transform: translateY(-5px) scale(1.08);
+
+    background:
+        linear-gradient(
+            180deg,
+            #b08dcb 0%,
+            #8c62b0 100%
+        );
+
+    box-shadow:
+        0 10px 20px rgba(221,184,245,0.25),
+        0 0 20px rgba(221,184,245,0.2);
 }
 
-
+/* Seleccionado */
 .asiento.seleccionado {
-    background-color: #ffcc00; 
+    background:
+        linear-gradient(
+            180deg,
+            #ddb8f5 0%,
+            #b980e7 100%
+        );
+
+    color: #141414;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 0 20px rgba(221,184,245,0.55),
+        0 10px 25px rgba(221,184,245,0.3);
 }
 
+/* Ocupado */
 .asiento.ocupado {
-    background-color: #444444; 
+    background:
+        linear-gradient(
+            180deg,
+            #f3f3f3 0%,
+            #bdbdbd 100%
+        );
+
+    color: #555;
+
     cursor: not-allowed;
+
+    opacity: 0.6;
 }
 
+.pasillo {
+    width: 45px;
+}
+
+/* =========================================
+   LEYENDA
+   ========================================= */
 
 .leyenda {
     display: flex;
-    gap: 30px;
-    list-style: none;
-    margin-top: 50px;
-    padding: 0;
+    justify-content: center;
+    gap: 35px;
+
+    flex-wrap: wrap;
+
+    padding: 18px 28px;
+
+    border-radius: 16px;
+
+    background: rgba(255,255,255,0.03);
+
+    border: 1px solid rgba(255,255,255,0.05);
+
+    margin-bottom: 35px;
 }
 
 .leyenda li {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 14px;
+    gap: 12px;
+
     color: #cccccc;
+
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .leyenda .asiento {
+    width: 30px;
+    height: 26px;
+
     cursor: default;
+
+    transform: none !important;
+
+    color: transparent;
 }
-.leyenda .asiento:hover {
+
+/* =========================================
+   RESUMEN DE COMPRA
+   ========================================= */
+
+.resumen-compra {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.04),
+            rgba(255,255,255,0.02)
+        );
+
+    border: 1px solid rgba(221,184,245,0.15);
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.35);
+}
+
+.info-compra {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.resumen-texto {
+    color: #bbbbbb;
+    font-size: 15px;
+}
+
+.resumen-total {
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.info-compra span {
+    color: #ddb8f5;
+    font-weight: 700;
+}
+
+/* =========================================
+   BOTÓN FINAL
+   ========================================= */
+
+.btn-neon {
+    background: transparent;
+
+    border: 2px solid #ddb8f5;
+
+    color: #ddb8f5;
+
+    padding: 16px 34px;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+    background: #ddb8f5;
+    color: #141414;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(221,184,245,0.35),
+        0 0 20px rgba(221,184,245,0.4);
+}
+
+#btn-comprar-final:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+
     transform: none;
+
+    box-shadow: none;
+
+    background: transparent;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    .sala-cine {
+        padding: 25px;
+    }
+
+    .asiento {
+        width: 38px;
+        height: 34px;
+        font-size: 11px;
+    }
+
+    .pasillo {
+        width: 20px;
+    }
+
+    .resumen-compra {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-neon {
+        width: 100%;
+    }
+
+}
+
+/* =========================================
+   REDISEÑO ESTÉTICO DE HORARIOS (SCHEDULE)
+   ========================================= */
+
+.cinema-container {
+    background: #1a1a1a; /* Fondo idéntico al de tus tarjetas de películas */
+    width: 100%;
+    max-width: 850px;
+    margin: 60px auto;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Encabezado y Posicionamiento del Póster a la Izquierda */
+.movie-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 45px;
+}
+
+.movie-poster {
+    width: 135px;
+    height: 200px;
+    background-color: #262626;
+    /* Puedes cambiar la ruta por la imagen de la película correspondiente */
+    background-image: url('Images/Proyecto.jpg'); 
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    flex-shrink: 0; /* Evita que el póster se encoja o se deforme */
+    border: 1px solid rgba(221, 184, 254, 0.15);
+}
+
+.movie-info h1 {
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.movie-info .genre {
+    color: #ddb8f5; /* Tu morado de acento */
+    font-size: 0.95em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.movie-info .synopsis {
+    line-height: 1.6;
+    font-size: 0.95em;
+    color: #b3b3b3;
+}
+
+/* Secciones de Selección */
+.selection-section {
+    margin-bottom: 40px;
+}
+
+.selection-section h3 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 1.15em;
+    letter-spacing: 0.5px;
+}
+
+.horizontal-list {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 15px;
+}
+
+/* Items en estado Neutro: Sin cajas pesadas ni bordes duros */
+/* --- ESTILO LIMPIO PARA FECHAS Y HORAS --- */
+.list-item {
+    background: transparent; /* Sin fondo base */
+    border: 2px solid transparent; /* Borde invisible para mantener el tamaño */
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover suave: solo aparece al pasar el cursor */
+.list-item:hover {
+    background: rgba(221, 184, 254, 0.1); /* Morado muy sutil */
+    border-color: rgba(221, 184, 254, 0.3);
+}
+
+/* Estado Activo: Fondo sólido morado */
+.list-item.active {
+    background: #ddb8f5;
+    border-color: #ddb8f5;
+    box-shadow: 0 5px 20px rgba(221, 184, 254, 0.4);
+}
+
+.date-item {
+    flex-direction: column;
+    padding: 12px 20px;
+    min-width: 90px;
+}
+
+/* Texto de Fechas en reposo */
+.date-item .day, 
+.date-item .month { 
+    color: #888888; 
+    font-size: 0.85em; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+}
+.date-item .number { 
+    font-size: 2.2em; 
+    font-weight: 700; 
+    color: #ffffff; 
+    margin: 4px 0; 
+}
+
+/* Texto de Horas en reposo */
+.time-item {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* CAMBIO DE COLOR DE TEXTO AL ESTAR SELECCIONADO */
+/* Esto hace que el texto se vuelva oscuro cuando la caja es morada (para que se lea bien) */
+.list-item.active .day,
+.list-item.active .month,
+.list-item.active .number,
+.list-item.active.time-item {
+    color: #1a1a1a !important; 
+}
+
+/* Detalles de Fechas */
+.date-item {
+    flex-direction: column;
+    padding: 18px 22px;
+    min-width: 100px;
+}
+
+.date-item .day { 
+    font-size: 0.8em; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    color: #a6a6a6;
+    transition: color 0.3s;
+}
+
+.date-item .number { 
+    font-size: 1.9em; 
+    font-weight: 700; 
+    margin: 4px 0; 
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+.date-item .month { 
+    font-size: 0.8em; 
+    color: #a6a6a6;
+    transition: color 0.3s;
+}
+
+/* Detalles de Horas */
+.time-item {
+    padding: 16px 32px;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+/* Botón Continuar estilo Menú de Inicio */
+.action-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-neon {
+    background: transparent;
+    color: #ddb8f5;
+    border: 2px solid #ddb8f5;
+    padding: 12px 38px;
+    font-size: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+    background: #ddb8f5;
+    color: #141414;
+    box-shadow: 0 0 20px rgba(221, 184, 254, 0.6);
 }

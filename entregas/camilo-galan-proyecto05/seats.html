@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asientos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section id="sala-cine" class="sala-cine">
+        <h2 id="titullo-asientos">Selecciona tus Asientos</h2>
+        
+        <div class="pantalla-curva"></div>
+
+    <div class="contenedor-asientos">
+                <div class="fila">
+                    <span class="fila-letra">A</span>
+                    <div class="asiento" data-id="A1">1</div>
+                    <div class="asiento" data-id="A2">2</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="A3">3</div>
+                    <div class="asiento ocupado" data-id="A4">4</div>
+                    <div class="asiento ocupado" data-id="A5">5</div>
+                    <div class="asiento" data-id="A6">6</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="A7">7</div>
+                    <div class="asiento" data-id="A8">8</div>
+                </div>
+
+                <div class="fila">
+                    <span class="fila-letra">B</span>
+                    <div class="asiento" data-id="B1">1</div>
+                    <div class="asiento" data-id="B2">2</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="B3">3</div>
+                    <div class="asiento" data-id="B4">4</div>
+                    <div class="asiento" data-id="B5">5</div>
+                    <div class="asiento" data-id="B6">6</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento ocupado" data-id="B7">7</div>
+                    <div class="asiento ocupado" data-id="B8">8</div>
+                </div>
+
+                <div class="fila">
+                    <span class="fila-letra">C</span>
+                    <div class="asiento" data-id="C1">1</div>
+                    <div class="asiento" data-id="C2">2</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="C3">3</div>
+                    <div class="asiento" data-id="C4">4</div>
+                    <div class="asiento" data-id="C5">5</div>
+                    <div class="asiento" data-id="C6">6</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="C7">7</div>
+                    <div class="asiento" data-id="C8">8</div>
+                </div>
+
+                <div class="fila">
+                    <span class="fila-letra">D</span>
+                    <div class="asiento" data-id="D1">1</div>
+                    <div class="asiento" data-id="D2">2</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="D3">3</div>
+                    <div class="asiento ocupado" data-id="D4">4</div>
+                    <div class="asiento" data-id="D5">5</div>
+                    <div class="asiento" data-id="D6">6</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="D7">7</div>
+                    <div class="asiento" data-id="D8">8</div>
+                </div>
+                
+                <div class="fila">
+                    <span class="fila-letra">E</span>
+                    <div class="asiento" data-id="E1">1</div>
+                    <div class="asiento" data-id="E2">2</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="E3">3</div>
+                    <div class="asiento" data-id="E4">4</div>
+                    <div class="asiento" data-id="E5">5</div>
+                    <div class="asiento" data-id="E6">6</div>
+                    <div class="pasillo"></div>
+                    <div class="asiento" data-id="E7">7</div>
+                    <div class="asiento" data-id="E8">8</div>
+                </div>
+            </div>
+
+            <ul class="leyenda">
+                <li><div class="asiento"></div> Disponible</li>
+                <li><div class="asiento-seleccionado"></div> Seleccionado</li>
+                <li><div class="asiento-ocupado"></div> Ocupado</li>
+            </ul>
+
+            <div class="resumen-compra">
+                <div class="info-compra">
+                    <p class="resumen-texto">Asientos: <span id="lista-asientos">-</span></p>
+                    <p class="resumen-total">Total: $<span id="precio-total">0</span></p>
+                </div>
+                <button class="btn-neon" id="btn-comprar-final" disabled>Continuar</button>
+            </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
