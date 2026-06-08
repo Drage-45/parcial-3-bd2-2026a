@@ -1,0 +1,182 @@
+/* =============================================
+   SLIDER PRINCIPAL (index.php)
+   ============================================= */
+.slider-container {
+    position: relative;
+    width: 100%;
+    margin-top: 68px; /* compensa navbar fija */
+    overflow: hidden;
+    height: 560px;
+}
+
+.slider {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-item {
+    position: relative;
+    width: 100%;
+    flex: 0 0 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.img-slider {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    transition: transform 8s ease;
+    display: block;
+}
+
+.slide-item.active .img-slider {
+    transform: scale(1.05);
+}
+
+/* Gradiente lateral izquierdo */
+.slide-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(20,20,20,0.75) 0%,
+        rgba(20,20,20,0.2) 50%,
+        transparent 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Gradiente inferior */
+.slide-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 200px;
+    background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Overlay con título y botón */
+.slide-overlay {
+    position: absolute;
+    bottom: 64px;
+    left: 80px;
+    z-index: 2;
+    max-width: 500px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.slide-item.active .slide-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide-overlay h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    letter-spacing: 3px;
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.8);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.slide-overlay p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 22px;
+    line-height: 1.6;
+}
+
+.slide-overlay .btn-slider {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all var(--transition);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+.slide-overlay .btn-slider:hover {
+    background: var(--primary-hover);
+    transform: scale(1.04);
+}
+
+/* Botones prev / next */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(20,20,20,0.55);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: white;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 50%;
+    backdrop-filter: blur(8px);
+    transition: all var(--transition);
+}
+.slider-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-50%) scale(1.1);
+}
+.prev-btn { left: 24px; }
+.next-btn { right: 24px; }
+
+/* Indicadores */
+.slider-indicators {
+    position: absolute;
+    bottom: 28px;
+    right: 40px;
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+}
+
+.dot {
+    width: 28px;
+    height: 3px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+.dot.active {
+    background: var(--primary);
+    width: 44px;
+}
+
+/* =============================================
+   RESPONSIVE SLIDER
+   ============================================= */
+@media (max-width: 768px) {
+    .slider-container { height: 280px; margin-top: 60px; }
+    .slide-overlay { left: 20px; bottom: 36px; max-width: 260px; }
+    .slide-overlay h2 { font-size: 32px; }
+    .slide-overlay p { display: none; }
+    .slider-indicators { right: 16px; }
+}

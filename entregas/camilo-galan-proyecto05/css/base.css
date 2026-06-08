@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+/* =============================================
+   RESET
+   ============================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =============================================
+   VARIABLES GLOBALES
+   ============================================= */
+:root {
+    --primary:        #e50914;
+    --primary-hover:  #ff2d3a;
+    --primary-glow:   rgba(229, 9, 20, 0.35);
+
+    --bg:             #141414;
+    --bg-card:        #1c1c1c;
+    --bg-elevated:    #222222;
+    --bg-overlay:     rgba(20, 20, 20, 0.96);
+
+    --text:           #ffffff;
+    --text-secondary: #a3a3a3;
+    --text-muted:     #6b6b6b;
+
+    --border:         rgba(255, 255, 255, 0.07);
+    --border-accent:  rgba(229, 9, 20, 0.4);
+
+    --radius-sm:  15px;
+    --radius-md:  10px;
+    --radius-lg:  16px;
+
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =============================================
+   BASE
+   ============================================= */
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg);
+    font-family: "Montserrat", sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+li { list-style: none; }
+
+/* =============================================
+   SCROLLBAR
+   ============================================= */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* =============================================
+   TABLA GENERAL
+   ============================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+table th {
+    background: var(--primary);
+    color: #fff;
+    padding: 14px 16px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    text-align: left;
+}
+
+table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+table tr:hover td {
+    background: var(--bg-elevated);
+    color: var(--text);
+}
+
+/* =============================================
+   BOTONES GLOBALES
+   ============================================= */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary);
+    color: #fff;
+    padding: 11px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--transition);
+}
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--primary-glow);
+}
+
+.btn-neon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 13px 32px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 4px 20px var(--primary-glow);
+    font-family: inherit;
+    text-decoration: none;
+}
+.btn-neon:hover {
+    background: var(--primary-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(255, 45, 58, 0.6);
+}
+
+.btn-comprar {
+    display: block;
+    text-align: center;
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--transition);
+    text-decoration: none;
+}
+.btn-comprar:hover { background: var(--primary-hover); }
+
+/* =============================================
+   SECCIÓN GENÉRICA (padding-top para navbar fija)
+   ============================================= */
+.page-content {
+    padding-top: 68px;
+}

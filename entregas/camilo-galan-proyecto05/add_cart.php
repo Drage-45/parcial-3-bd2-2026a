@@ -21,24 +21,43 @@ $id_producto = intval($_POST['id_producto']);
 
 // Crear venta temporal
 
-$sql = "
-INSERT INTO venta
-(
-id_cliente,
-total
-)
-VALUES
-(
-$id_cliente,
-0
-)
+// Buscar venta pendiente
+
+$sqlVenta = "
+SELECT id_venta
+FROM venta
+WHERE id_cliente = $id_cliente
+AND estado = 'PENDIENTE'
+LIMIT 1
 ";
 
+$resVenta = $conn->query($sqlVenta);
 
-$conn->query($sql);
+if($resVenta->num_rows > 0){
 
+    $venta = $resVenta->fetch_assoc();
 
-$id_venta = $conn->insert_id;
+    $id_venta = $venta['id_venta'];
+
+}else{
+
+    $conn->query("
+    INSERT INTO venta
+    (
+        id_cliente,
+        total,
+        estado
+    )
+    VALUES
+    (
+        $id_cliente,
+        0,
+        'PENDIENTE'
+    )
+    ");
+
+    $id_venta = $conn->insert_id;
+}
 
 
 
@@ -65,9 +84,7 @@ cantidad,
 precio,
 id_producto
 )
-
 VALUES
-
 (
 $id_venta,
 'COMBO',

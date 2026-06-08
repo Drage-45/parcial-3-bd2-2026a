@@ -1,0 +1,350 @@
+/* =============================================
+   PÁGINA SCHEDULE — Movie Hero + Funciones
+   ============================================= */
+.cinema-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+}
+
+.movie-header {
+    display: flex;
+    gap: 36px;
+    margin-bottom: 52px;
+    align-items: flex-start;
+}
+
+.movie-poster {
+    width: 170px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+}
+
+.movie-poster img {
+    width: 100%;
+    height: 255px;
+    object-fit: cover;
+    display: block;
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    padding-top: 4px;
+}
+
+.movie-info h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--text);
+    font-size: 44px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.movie-info .genre {
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.movie-info .synopsis {
+    line-height: 1.75;
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 600px;
+}
+
+/* =============================================
+   SELECCIÓN DE FUNCIONES
+   ============================================= */
+.selection-section { margin-bottom: 44px; }
+
+.selection-section h3 {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.horizontal-list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+}
+.horizontal-list::-webkit-scrollbar { display: none; }
+
+.list-item {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: all var(--transition);
+    flex-shrink: 0;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text);
+    padding: 14px 22px;
+    min-width: 110px;
+    gap: 2px;
+}
+
+.list-item:hover {
+    border-color: rgba(229, 9, 20, 0.4);
+    background: rgba(229, 9, 20, 0.06);
+}
+
+.list-item.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 20px var(--primary-glow);
+}
+
+.list-item strong {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    transition: color var(--transition);
+}
+
+.list-item small {
+    font-size: 10px;
+    color: var(--text-muted);
+    transition: color var(--transition);
+    letter-spacing: 0.5px;
+}
+
+.list-item.active strong,
+.list-item.active small { color: #fff; }
+
+/* Estilo alternativo date-item / time-item */
+.date-item { min-width: 90px; }
+
+.date-item .day,
+.date-item .month {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    transition: color var(--transition);
+}
+
+.date-item .number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text);
+    margin: 2px 0;
+    letter-spacing: 1px;
+    transition: color var(--transition);
+}
+
+.time-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    padding: 14px 28px;
+    flex-direction: row;
+    gap: 0;
+    min-width: auto;
+}
+
+.list-item.active .day,
+.list-item.active .month,
+.list-item.active .number,
+.list-item.active.time-item { color: #fff !important; }
+
+/* Botón continuar */
+.action-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+}
+
+/* =============================================
+   SALA DE ASIENTOS (seats.php)
+   ============================================= */
+.sala-cine {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+    text-align: center;
+}
+
+#titullo-asientos {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 3px;
+    color: var(--text);
+    margin-bottom: 32px;
+}
+
+/* Pantalla curva */
+.pantalla-curva {
+    width: 70%;
+    max-width: 520px;
+    height: 14px;
+    background: linear-gradient(90deg, transparent, rgba(229,9,20,0.7), transparent);
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    box-shadow: 0 0 30px rgba(229,9,20,0.3);
+    position: relative;
+}
+
+.pantalla-curva::after {
+    content: 'PANTALLA';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.contenedor-asientos {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.fila {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fila-letra {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    width: 20px;
+    text-align: right;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Asientos */
+.asiento {
+    width: 32px;
+    height: 28px;
+    border-radius: 6px 6px 4px 4px;
+    background: var(--bg-elevated);
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    font-size: 9px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+    user-select: none;
+    position: relative;
+}
+
+.asiento::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 4px;
+    right: 4px;
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px 2px 0 0;
+}
+
+.asiento:hover:not(.ocupado) {
+    background: rgba(229, 9, 20, 0.2);
+    border-color: var(--primary);
+    color: var(--text);
+    transform: scale(1.1);
+}
+
+.asiento.seleccionado {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 14px var(--primary-glow);
+    transform: scale(1.08);
+}
+
+.asiento.ocupado {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.04);
+    cursor: not-allowed;
+    opacity: 0.35;
+}
+
+/* Leyenda */
+.leyenda {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin: 32px 0 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.leyenda li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.leyenda .asiento {
+    width: 22px;
+    height: 18px;
+    pointer-events: none;
+    font-size: 0;
+}
+
+/* Resumen */
+.resumen-texto,
+.resumen-total {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 8px 0;
+}
+
+.resumen-total {
+    font-size: 22px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 24px;
+}
+
+.resumen-total span { color: var(--primary); }
+.resumen-texto span { color: var(--text); font-weight: 600; }
+
+/* =============================================
+   RESPONSIVE SCHEDULE / SEATS
+   ============================================= */
+@media (max-width: 768px) {
+    .cinema-container { padding: 80px 20px 60px; }
+    .movie-header { flex-direction: column; gap: 20px; }
+    .movie-poster { width: 120px; }
+    .movie-info h1 { font-size: 32px; }
+    .sala-cine { padding: 80px 16px 60px; }
+    .asiento { width: 26px; height: 22px; font-size: 8px; }
+    .fila { gap: 4px; }
+}

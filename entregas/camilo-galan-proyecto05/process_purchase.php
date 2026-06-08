@@ -94,14 +94,16 @@ foreach($asientos as $id_funcion_butaca){
     fecha_venta,
     precio,
     id_cliente,
-    id_funcion_butaca
+    id_funcion_butaca,
+    id_venta
     )
     VALUES
     (
     NOW(),
     $precio,
     $id_cliente,
-    $id_funcion_butaca
+    $id_funcion_butaca,
+    $id_venta
     )
     ";
 
@@ -179,26 +181,8 @@ $idBoleto = implode(",", $idsBoletos);
 
 echo "
 <script>
-
 alert('Compra realizada correctamente');
-
-window.location='voucher.php?boletos=$idBoleto';
-
-</script>";
-
-
-
-$idBoleto = implode(",", $idsBoletos);
-
-
-
-echo "
-<script>
-
-alert('Compra realizada correctamente');
-
 window.location='voucher.php?boletos=$idBoleto&venta=$id_venta';
-
 </script>";
 
 ?>
