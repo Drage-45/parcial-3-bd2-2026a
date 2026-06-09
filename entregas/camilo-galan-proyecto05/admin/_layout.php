@@ -39,7 +39,7 @@ $menuItems = [
     'products'  => ['icon'=>'🍿', 'label'=>'Productos',   'href'=>'products.php'],
     'product_create'=>['icon'=>'➕','label'=>'Nuevo Producto','href'=>'product_create.php','sub'=>true],
     'sales'     => ['icon'=>'📊', 'label'=>'Ventas del día','href'=>'admin_sales.php'],
-    'reports'   => ['icon'=>'📈', 'label'=>'Reportes',    'href'=>'../reports.php'],
+    'reports'   => ['icon'=>'📈', 'label'=>'Reportes',    'href'=>'reports.php'],
     'schedule'  => ['icon'=>'🗓', 'label'=>'Funciones',   'href'=>'../schedule.php'],
 ];
 ?>
@@ -594,7 +594,7 @@ $menuItems = [
            class="nav-item <?= ($activeMenu??'')==='sales'?'active':'' ?>">
             <span class="nav-icon">📊</span> Ventas del día
         </a>
-        <a href="../reports.php"
+        <a href="reports.php"
            class="nav-item <?= ($activeMenu??'')==='reports'?'active':'' ?>">
             <span class="nav-icon">📈</span> Reportes
         </a>
