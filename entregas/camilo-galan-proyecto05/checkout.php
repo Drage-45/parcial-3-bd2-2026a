@@ -19,12 +19,28 @@ if ($resVenta->num_rows == 0) {
 $venta    = $resVenta->fetch_assoc();
 $id_venta = $venta['id_venta'];
 
+// Boletos
+$sqlBoletos = "
+SELECT vd.descripcion, vd.cantidad, vd.precio, (vd.cantidad * vd.precio) subtotal
+FROM venta_detalle vd
+WHERE vd.id_venta = $id_venta AND vd.tipo = 'BOLETO'
+";
+$resBoletos  = $conn->query($sqlBoletos);
+$totalBoletos = 0;
+$boletos      = [];
+
+while ($b = $resBoletos->fetch_assoc()) {
+    $totalBoletos += $b['subtotal'];
+    $boletos[]     = $b;
+}
+
+// Combos / Confitería
 $sqlProductos = "
 SELECT vd.descripcion, vd.cantidad, vd.precio, (vd.cantidad * vd.precio) subtotal
 FROM venta_detalle vd
-WHERE vd.id_venta = $id_venta AND vd.tipo='COMBO'
+WHERE vd.id_venta = $id_venta AND vd.tipo = 'COMBO'
 ";
-$productos  = $conn->query($sqlProductos);
+$productos   = $conn->query($sqlProductos);
 $totalComida = 0;
 $items       = [];
 
@@ -32,6 +48,8 @@ while ($p = $productos->fetch_assoc()) {
     $totalComida += $p['subtotal'];
     $items[]      = $p;
 }
+
+$totalGeneral = $totalBoletos + $totalComida;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -62,6 +80,31 @@ while ($p = $productos->fetch_assoc()) {
             <p>Revisa los detalles antes de pagar</p>
         </div>
 
+        <!-- Boletos -->
+        <?php if (count($boletos) > 0): ?>
+        <div class="checkout-section">
+            <h2>🎬 Boletos</h2>
+            <?php foreach ($boletos as $b): ?>
+            <div class="checkout-row">
+                <span><?= htmlspecialchars($b['descripcion']) ?> ×<?= $b['cantidad'] ?></span>
+                <span>$<?= number_format($b['subtotal'], 0, ',', '.') ?></span>
+            </div>
+            <?php endforeach; ?>
+            <div class="checkout-row" style="margin-top:8px;">
+                <span style="font-weight:700;color:var(--text);">Subtotal boletos</span>
+                <span class="checkout-total">$<?= number_format($totalBoletos, 0, ',', '.') ?></span>
+            </div>
+        </div>
+        <?php else: ?>
+        <div class="checkout-section">
+            <h2>🎬 Boletos</h2>
+            <p style="color:var(--text-secondary);font-size:14px;">
+                No hay boletos en el carrito.
+                <a href="index.php" style="color:var(--accent);">Ver cartelera</a>
+            </p>
+        </div>
+        <?php endif; ?>
+
         <!-- Confitería -->
         <?php if (count($items) > 0): ?>
         <div class="checkout-section">
@@ -79,23 +122,15 @@ while ($p = $productos->fetch_assoc()) {
         </div>
         <?php endif; ?>
 
-        <!-- Boletos (sección informativa) -->
-        <div class="checkout-section">
-            <h2>🎬 Boletos</h2>
-            <p style="color:var(--text-secondary);font-size:14px;">
-                Los boletos seleccionados se incluirán automáticamente al confirmar el pago.
-            </p>
-        </div>
-
         <!-- Total y acción -->
         <div class="checkout-section">
             <div class="summary-total">
                 <span style="font-size:15px;font-weight:700;">Total a pagar</span>
-                <strong>$<?= number_format($totalComida, 0, ',', '.') ?></strong>
+                <strong>$<?= number_format($totalGeneral, 0, ',', '.') ?></strong>
             </div>
 
             <form action="process_checkout.php" method="POST" style="margin-top:20px;">
-                <input type="hidden" name="comida"      value="<?= $totalComida ?>">
+                <input type="hidden" name="total"       value="<?= $totalGeneral ?>">
                 <input type="hidden" name="confirmado"  value="1">
                 <button type="submit" class="btn-neon" style="width:100%;justify-content:center;">
                     Confirmar y pagar

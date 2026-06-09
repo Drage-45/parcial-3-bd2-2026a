@@ -29,13 +29,13 @@
     display: block;
 }
 
-.movie-info {
+.movie-details {
     display: flex;
     flex-direction: column;
     padding-top: 4px;
 }
 
-.movie-info h1 {
+.movie-details h1 {
     font-family: 'Bebas Neue', sans-serif;
     color: var(--text);
     font-size: 44px;
@@ -44,7 +44,7 @@
     line-height: 1;
 }
 
-.movie-info .genre {
+.movie-details .genre {
     color: var(--primary);
     font-size: 11px;
     font-weight: 700;
@@ -53,7 +53,7 @@
     margin-bottom: 16px;
 }
 
-.movie-info .synopsis {
+.movie-details .synopsis {
     line-height: 1.75;
     font-size: 14px;
     color: var(--text-secondary);
@@ -86,7 +86,7 @@
 
 .list-item {
     background: var(--bg-elevated);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: var(--radius-md);
     cursor: pointer;
     display: flex;
@@ -98,14 +98,33 @@
     text-align: center;
     text-decoration: none;
     color: var(--text);
-    padding: 14px 22px;
-    min-width: 110px;
-    gap: 2px;
+    padding: 16px 24px;
+    min-width: 120px;
+    gap: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Indicador rojo inferior que crece en hover */
+.list-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transition: transform var(--transition);
 }
 
 .list-item:hover {
-    border-color: rgba(229, 9, 20, 0.4);
-    background: rgba(229, 9, 20, 0.06);
+    border-color: rgba(229, 9, 20, 0.5);
+    background: rgba(229, 9, 20, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.list-item:hover::after {
+    transform: scaleX(1);
 }
 
 .list-item.active {
@@ -113,6 +132,8 @@
     border-color: var(--primary);
     box-shadow: 0 4px 20px var(--primary-glow);
 }
+
+.list-item.active::after { display: none; }
 
 .list-item strong {
     font-size: 13px;

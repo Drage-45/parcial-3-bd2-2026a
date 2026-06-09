@@ -9,18 +9,19 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $id_cliente = $_SESSION['usuario_id'];
 
+// Traer TODOS los ítems del carrito (COMBO y BOLETO)
 $sql = "
 SELECT
-    vd.id_detalle, vd.descripcion, vd.cantidad, vd.precio,
-    p.nombre, p.imagen,
-    (vd.cantidad * vd.precio) AS subtotal
+    vd.id_detalle, vd.descripcion, vd.cantidad, vd.precio, vd.tipo,
+    (vd.cantidad * vd.precio) AS subtotal,
+    COALESCE(p.imagen, '') AS imagen,
+    COALESCE(p.nombre, vd.descripcion) AS nombre
 FROM venta_detalle vd
-INNER JOIN producto p  ON vd.id_producto = p.id_producto
-INNER JOIN venta v     ON vd.id_venta    = v.id_venta
+LEFT JOIN producto p    ON vd.id_producto = p.id_producto
+INNER JOIN venta v      ON vd.id_venta    = v.id_venta
 WHERE v.id_cliente = $id_cliente
   AND v.estado     = 'PENDIENTE'
-  AND vd.tipo      = 'COMBO'
-ORDER BY vd.id_detalle DESC
+ORDER BY vd.tipo DESC, vd.id_detalle DESC
 ";
 
 $productos = $conn->query($sql);
@@ -72,10 +73,20 @@ while ($p = $productos->fetch_assoc()) {
             <div class="cart-items">
                 <?php foreach ($items as $p): ?>
                 <div class="bloque-card">
+                    <?php if (!empty($p['imagen'])): ?>
                     <img src="<?= htmlspecialchars($p['imagen']) ?>" class="bloque-img" alt="<?= htmlspecialchars($p['nombre']) ?>">
+                    <?php else: ?>
+                    <div class="bloque-img" style="display:flex;align-items:center;justify-content:center;font-size:40px;">
+                        <?= $p['tipo'] === 'BOLETO' ? '🎬' : '🍿' ?>
+                    </div>
+                    <?php endif; ?>
                     <div class="bloque-info">
                         <h3><?= htmlspecialchars($p['nombre']) ?></h3>
-                        <p><?= htmlspecialchars($p['descripcion']) ?></p>
+                        <?php if ($p['tipo'] === 'BOLETO'): ?>
+                            <span style="font-size:11px;background:rgba(255,180,0,0.15);color:#ffb400;padding:2px 8px;border-radius:20px;font-weight:700;">BOLETO</span>
+                        <?php else: ?>
+                            <span style="font-size:11px;background:rgba(0,200,100,0.15);color:#00c864;padding:2px 8px;border-radius:20px;font-weight:700;">COMBO</span>
+                        <?php endif; ?>
                         <div class="bloque-footer">
                             <div>
                                 <div class="cart-item-qty">× <?= $p['cantidad'] ?></div>
@@ -115,7 +126,7 @@ while ($p = $productos->fetch_assoc()) {
                     Continuar compra
                 </a>
                 <a href="snacks.php" style="display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--text-secondary);">
-                    ← Seguir comprando
+                    ← Agregar combos
                 </a>
             </div>
 
@@ -126,7 +137,7 @@ while ($p = $productos->fetch_assoc()) {
         <div class="cart-empty">
             <p style="font-size:48px;margin-bottom:16px;">🛒</p>
             <p>Tu carrito está vacío</p>
-            <a href="snacks.php" class="btn-neon">Ver combos</a>
+            <a href="index.php" class="btn-neon">Ver cartelera</a>
         </div>
 
         <?php endif; ?>

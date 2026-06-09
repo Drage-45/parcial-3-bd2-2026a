@@ -1,341 +1,140 @@
-console.log("SCRIPT NUEVO CARGADO");
+// =============================================
+// NAVBAR — oscurecer al hacer scroll
+// =============================================
+(function () {
+    const navbar = document.getElementById("navbar");
+    if (!navbar) return;
+    const onScroll = () => navbar.classList.toggle("scrolled", window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+})();
 
 
 document.addEventListener("DOMContentLoaded", () => {
 
-
-    // =========================
-    // DROPDOWN
-    // =========================
-
-    document.querySelectorAll(".dropbtn")
-        .forEach(btn => {
-
-            btn.addEventListener("click", () => {
-
-                btn.nextElementSibling
-                    .classList.toggle("mostrar");
-
-            });
-
+    // =============================================
+    // DROPDOWN — cierre al click fuera
+    // =============================================
+    document.querySelectorAll(".dropbtn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const menu   = btn.nextElementSibling;
+            const isOpen = menu.classList.contains("mostrar");
+            document.querySelectorAll(".dropdown-content").forEach(m => m.classList.remove("mostrar"));
+            if (!isOpen) menu.classList.add("mostrar");
         });
+    });
 
-
-
-    // =========================
-    // SLIDER
-    // =========================
-
-
-    const slider =
-        document.querySelector(".slider");
-
-
-    const slides =
-        document.querySelectorAll(".slide-item");
-
-
-    let posicion = 0;
-
-
-    document.querySelector(".next-btn")
-        ?.addEventListener("click", () => {
-
-
-            posicion++;
-
-            if (posicion >= slides.length)
-                posicion = 0;
-
-
-            slider.style.transform =
-                `translateX(-${posicion * 100}%)`;
-
-        });
-
-
-
-    document.querySelector(".prev-btn")
-        ?.addEventListener("click", () => {
-
-
-            posicion--;
-
-            if (posicion < 0)
-                posicion = slides.length - 1;
-
-
-            slider.style.transform =
-                `translateX(-${posicion * 100}%)`;
-
-        });
-
-
-
-// =========================
-// ASIENTOS
-// =========================
-
-const asientos =
-document.querySelectorAll(".asiento:not(.ocupado)");
-
-
-const inputAsientos =
-document.getElementById("asientos");
-
-
-const boton =
-document.getElementById("btn-comprar-final");
-
-
-const lista =
-document.getElementById("lista-asientos");
-
-
-let seleccionados = [];
-
-
-
-asientos.forEach(asiento => {
-
-
-    asiento.addEventListener("click",()=>{
-
-
-        const id =
-        asiento.dataset.id;
-
-
-        const numero =
-        asiento.dataset.numero;
-
-
-
-        if(asiento.classList.contains("seleccionado")){
-
-
-            asiento.classList.remove("seleccionado");
-
-
-            seleccionados =
-            seleccionados.filter(
-                a => a.id !== id
-            );
-
-
-        }else{
-
-
-            asiento.classList.add("seleccionado");
-
-
-            seleccionados.push({
-
-                id:id,
-                numero:numero
-
-            });
-
-        }
-
-
-
-        actualizarCompra();
-
-
-
+    document.addEventListener("click", () => {
+        document.querySelectorAll(".dropdown-content").forEach(m => m.classList.remove("mostrar"));
     });
 
 
-});
+    // =============================================
+    // SLIDER — autoplay, dots, ken-burns
+    // =============================================
+    const sliderEl    = document.querySelector(".slider");
+    const slides      = document.querySelectorAll(".slide-item");
+    const dotsWrapper = document.getElementById("dots");
 
+    if (sliderEl && slides.length) {
 
+        let pos      = 0;
+        let autoPlay = null;
 
-function actualizarCompra(){
+        // Generar dots
+        if (dotsWrapper) {
+            slides.forEach((_, i) => {
+                const dot = document.createElement("div");
+                dot.classList.add("dot");
+                if (i === 0) dot.classList.add("active");
+                dot.addEventListener("click", () => { goTo(i); startAuto(); });
+                dotsWrapper.appendChild(dot);
+            });
+        }
 
+        function goTo(index) {
+            slides[pos].classList.remove("active");
+            if (dotsWrapper) dotsWrapper.children[pos]?.classList.remove("active");
 
-    let ids =
-    seleccionados.map(
-        a=>a.id
-    );
+            pos = (index + slides.length) % slides.length;
 
+            sliderEl.style.transform = `translateX(-${pos * 100}%)`;
+            slides[pos].classList.add("active");
+            if (dotsWrapper) dotsWrapper.children[pos]?.classList.add("active");
+        }
 
-    inputAsientos.value =
-    ids.join(",");
+        function startAuto() {
+            stopAuto();
+            autoPlay = setInterval(() => goTo(pos + 1), 5500);
+        }
 
+        function stopAuto() {
+            clearInterval(autoPlay);
+        }
 
+        document.querySelector(".next-btn")?.addEventListener("click", () => { goTo(pos + 1); startAuto(); });
+        document.querySelector(".prev-btn")?.addEventListener("click", () => { goTo(pos - 1); startAuto(); });
 
-    if(lista){
+        const container = sliderEl.closest(".slider-container");
+        container?.addEventListener("mouseenter", stopAuto);
+        container?.addEventListener("mouseleave", startAuto);
 
-        lista.innerHTML =
-        seleccionados.length > 0
-        ?
-        seleccionados.map(a=>a.numero).join(", ")
-        :
-        "-";
-
+        slides[0].classList.add("active");
+        startAuto();
     }
 
 
+    // =============================================
+    // ASIENTOS — selección + precio dinámico
+    // =============================================
+    const asientos      = document.querySelectorAll(".asiento:not(.ocupado)");
+    const inputAsientos = document.getElementById("asientos");
+    const boton         = document.getElementById("btn-comprar-final");
+    const listaEl       = document.getElementById("lista-asientos");
+    const precioEl      = document.getElementById("precio-total");
 
-    if(seleccionados.length > 0){
+    if (asientos.length && inputAsientos) {
 
-        boton.disabled=false;
+        let seleccionados = [];
 
-    }else{
+        const precioBase = precioEl
+            ? parseInt(precioEl.textContent.replace(/\./g, "").replace(/,/g, ""), 10) || 0
+            : 0;
 
-        boton.disabled=true;
+        asientos.forEach(asiento => {
+            asiento.addEventListener("click", () => {
+                const id     = asiento.dataset.id;
+                const numero = asiento.dataset.numero;
 
+                if (asiento.classList.contains("seleccionado")) {
+                    asiento.classList.remove("seleccionado");
+                    seleccionados = seleccionados.filter(a => a.id !== id);
+                } else {
+                    asiento.classList.add("seleccionado");
+                    seleccionados.push({ id, numero });
+                }
+
+                actualizarCompra();
+            });
+        });
+
+        function actualizarCompra() {
+            inputAsientos.value = seleccionados.map(a => a.id).join(",");
+
+            if (listaEl) {
+                listaEl.textContent = seleccionados.length
+                    ? seleccionados.map(a => a.numero).join(", ")
+                    : "—";
+            }
+
+            if (precioEl && precioBase) {
+                const total = precioBase * seleccionados.length;
+                precioEl.textContent = total.toLocaleString("es-CO");
+            }
+
+            if (boton) boton.disabled = seleccionados.length === 0;
+        }
     }
 
-
-
-};
-
-
-});
-
-let carrito = [];
-
-document.querySelectorAll(".btn-comprar")
-.forEach(btn=>{
-
-btn.onclick=()=>{
-
-let id = btn.dataset.id;
-
-carrito.push(id);
-
-localStorage.setItem(
-"carrito",
-JSON.stringify(carrito)
-);
-
-alert("Producto agregado");
-
-}
-
-});
-
-// =================================
-// CARRITO PRODUCTOS
-// =================================
-
-
-function cargarCarrito(){
-
-
-const lista =
-document.getElementById("lista-carrito");
-
-
-const total =
-document.getElementById("total");
-
-
-
-if(!lista){
-    return;
-}
-
-
-
-let productos =
-JSON.parse(localStorage.getItem("productos")) || [];
-
-
-
-let suma=0;
-
-
-
-lista.innerHTML="";
-
-
-
-productos.forEach((p,index)=>{
-
-
-let subtotal =
-p.precio*p.cantidad;
-
-
-
-suma += subtotal;
-
-
-
-lista.innerHTML += `
-
-<div class="bloque-card">
-
-
-<h3>${p.nombre}</h3>
-
-
-<p>
-Cantidad: ${p.cantidad}
-</p>
-
-
-<p>
-$${subtotal.toLocaleString()}
-</p>
-
-
-<button 
-onclick="eliminarProducto(${index})">
-
-Eliminar
-
-</button>
-
-
-</div>
-
-`;
-
-
-});
-
-
-
-total.innerText =
-suma.toLocaleString("es-CO");
-
-
-}
-
-
-
-function eliminarProducto(index){
-
-
-let productos =
-JSON.parse(localStorage.getItem("productos")) || [];
-
-
-productos.splice(index,1);
-
-
-
-localStorage.setItem(
-"productos",
-JSON.stringify(productos)
-);
-
-
-cargarCarrito();
-
-
-}
-
-
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-cargarCarrito();
-
-});
+}); // fin DOMContentLoaded

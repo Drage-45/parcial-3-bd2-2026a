@@ -34,6 +34,7 @@ SET estado='PAGADA'
 WHERE id_venta=$id_venta
 ");
 
+
 header("Location:voucher.php?venta=$id_venta");
 exit();
 

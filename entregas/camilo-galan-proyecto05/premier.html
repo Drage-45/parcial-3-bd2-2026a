@@ -3,49 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estrenos - Cinemas Star</title>
+    <title>Estrenos — Cinemas Star</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="menu">
-        <img class="logo" src="Images/logo.svg" alt="Logo">
+
+    <header class="menu" id="navbar">
+        <a href="index.php"><img class="logo" src="Images/logo.svg" alt="Cinemas Star"></a>
         <nav class="nav-menu">
             <ul class="principal">
-                <li><a href="index.php" class="nav-link">Inicio</a></li>
-                <li><a href="premier.html" class="nav-link" style="color: #ddb8f5;">Estrenos</a></li>
-                <li><a href="snacks.html" class="nav-link">Confitería</a></li>
+                <li><a href="index.php"    class="nav-link">Inicio</a></li>
+                <li><a href="premier.html" class="nav-link active">Estrenos</a></li>
+                <li><a href="snacks.php"   class="nav-link">Confitería</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="seccion-principal">
+
+        <!-- Esta semana -->
         <h2 class="titulo-seccion">Estrenos Actuales</h2>
-        <div class="contenedor-bloques"> 
-            <div class="bloque-card" style="--color-shadow: rgba(221, 184, 254, 0.4);">
+        <div class="contenedor-bloques">
+            <div class="bloque-card">
                 <img class="bloque-img" src="Images/Proyecto.jpg" alt="Proyecto Fin del Mundo">
                 <div class="bloque-info">
                     <h3>Proyecto Fin del Mundo</h3>
-                    <p>Ciencia Ficción • 120 min • +14<br><br>Un grupo de desarrolladores debe detener un algoritmo autónomo antes de que tome el control.</p>
+                    <p>
+                        Ciencia Ficción &bull; 120 min &bull; +14<br><br>
+                        Un grupo de desarrolladores debe detener un algoritmo autónomo
+                        antes de que tome el control total de los sistemas globales.
+                    </p>
                     <div class="bloque-footer">
-                        <button class="btn-comprar">Comprar Boletos</button>
+                        <a href="index.php#cartelera" class="btn-comprar">Comprar Boletos</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <h2 class="titulo-seccion" style="margin-top: 60px;">Próximamente</h2>
         <div class="contenedor-bloques">
-            <div class="bloque-card" style="--color-shadow: rgba(100, 100, 100, 0.4); opacity: 0.8;">
-                <img class="bloque-img" src="Images/boda.jpg" alt="Película Futura">
+            <div class="bloque-card">
+                <img class="bloque-img" src="Images/hoppers-poster.jpg" alt="Proyecto Fin del Mundo">
                 <div class="bloque-info">
-                    <h3>Boda Sangrienta 2</h3>
-                    <p>Comedia / Terror<br><br>La noche de bodas se convierte en una pesadilla cuando la familia revela su verdadero rostro. <br><strong>Estreno: 15 de Junio</strong></p>
+                    <h3>Hoppers: Operacion Castor</h3>
+                    <p>
+                        Animación &bull; 105 min &bull; +12<br><br>
+                        Una estudiante universitaria amante de los animales, 
+                        que transfiere su mente a un castor robótico de apariencia humana para comunicarse con los animales y 
+                        salvar su hábitat de la destrucción humana.
+                    </p>
                     <div class="bloque-footer">
-                        <button class="btn-comprar" style="background: transparent; border: 1px solid #666; color: #666; cursor: not-allowed;">Próximamente</button>
+                        <a href="index.php#cartelera" class="btn-comprar">Comprar Boletos</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Próximamente -->
+        <h2 class="titulo-seccion" style="margin-top:56px;">Próximamente</h2>
+        <div class="contenedor-bloques">
+            <div class="bloque-card" style="opacity:0.75;">
+                <img class="bloque-img" src="Images/scary_movie.png" alt="Boda Sangrienta 2">
+                <div class="bloque-info">
+                    <h3>Scary Movie 6</h3>
+                    <p>
+                        Comedia / Terror<br><br>
+                       Veintiséis años después de escapar del asesino enmascarado inicial, 
+                       los Cuatro del Núcleo vuelven a ser el objetivo de criminales mientras se burlan de clásicos modernos, 
+                       remakes y la cultura de la cancelación.<br>
+                        <strong style="color:var(--text);">Estreno: 15 de Junio</strong>
+                    </p>
+                    <div class="bloque-footer">
+                        <button class="btn-comprar"
+                            style="background:transparent;border:1px solid rgba(255,255,255,0.15);
+                                   color:var(--text-muted);cursor:not-allowed;">
+                            Próximamente
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+                        <div class="bloque-card" style="opacity:0.75;">
+                <img class="bloque-img" src="Images/dune_3.jpg" alt="Boda Sangrienta 2">
+                <div class="bloque-info">
+                    <h3>Dune: Parte Tres</h3>
+                    <p>
+                        Ciencia Ficcion / Cine Epico<br><br>
+                       Sigue a Paul Atreides años después de su ascenso como emperador del universo. 
+                       Atrapado por las consecuencias de una guerra santa en su nombre y visiones de una extinción inminente.<br>
+                        <strong style="color:var(--text);">Estreno: 22 de Junio</strong>
+                    </p>
+                    <div class="bloque-footer">
+                        <button class="btn-comprar"
+                            style="background:transparent;border:1px solid rgba(255,255,255,0.15);
+                                   color:var(--text-muted);cursor:not-allowed;">
+                            Próximamente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <script src="script.js"></script>

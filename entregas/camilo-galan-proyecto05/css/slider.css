@@ -97,6 +97,10 @@
     line-height: 1.6;
 }
 
+.slide-item:first-child .img-slider {
+    object-position: center 40%;
+}
+
 .slide-overlay .btn-slider {
     display: inline-flex;
     align-items: center;

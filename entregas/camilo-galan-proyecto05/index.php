@@ -16,13 +16,27 @@ $peliculas = $conn->query($sqlPeliculas);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinemas Star</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-text {
+            font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        .logo-red { color: #e50914; }
+    </style>
 </head>
 <body>
 
     <header class="menu" id="navbar">
-        <a href="index.php">
-            <img class="logo" src="Images/logo.svg" alt="Cinemas Star">
+        <a href="index.php" class="logo-wrap">
+            <span class="logo-text">CINEMAS <span class="logo-red">STAR</span></span>
         </a>
 
         <nav class="nav-menu">
@@ -58,7 +72,14 @@ $peliculas = $conn->query($sqlPeliculas);
         </nav>
 
         <div class="but-cart">
-            <?php if (isset($_SESSION['usuario_nombre'])): ?>
+            <?php if (isset($_SESSION['admin_id'])): ?>
+                <a href="admin/dashboard.php" class="cartelera" style="text-decoration:none;">
+                    Panel Admin
+                </a>
+                <button class="cartelera" onclick="window.location.href='admin/logout.php'">
+                    Cerrar Sesión
+                </button>
+            <?php elseif (isset($_SESSION['usuario_nombre'])): ?>
                 <span style="color:var(--text-secondary);font-size:13px;font-weight:500;">
                     Hola, <?= htmlspecialchars($_SESSION['usuario_nombre']) ?>
                 </span>

@@ -55,11 +55,11 @@ $funciones = $conn->query($sqlFunciones);
                 <img src="<?= htmlspecialchars($pelicula['imagen']) ?>"
                      alt="<?= htmlspecialchars($pelicula['titulo']) ?>">
             </div>
-            <div class="movie-info">
+            <div class="movie-details">
                 <h1><?= htmlspecialchars($pelicula['titulo']) ?></h1>
                 <p class="genre">
                     <?= htmlspecialchars($pelicula['genero']) ?>
-                    <?php if (!empty($pelicula['duracion'])):      ?> · <?= htmlspecialchars($pelicula['duracion']) ?> min<?php endif; ?>
+                    <?php if (!empty($pelicula['duracion'])):      ?> · <?= htmlspecialchars($pelicula['duracion']) ?> <?php endif; ?>
                     <?php if (!empty($pelicula['clasificacion'])): ?> · <?= htmlspecialchars($pelicula['clasificacion']) ?><?php endif; ?>
                 </p>
                 <?php if (!empty($pelicula['sinopsis'])): ?>

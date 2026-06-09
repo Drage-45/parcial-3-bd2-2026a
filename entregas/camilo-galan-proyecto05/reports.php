@@ -1,248 +1,197 @@
 <?php
-
 session_start();
 
-if(!isset($_SESSION['usuario_id'])){
+if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
     exit();
 }
 
-/*
-Ejemplo si tienes rol administrador
-if($_SESSION['rol'] != 'ADMIN'){
-    die("Acceso denegado");
-}
-*/
-
 require 'config/conection.php';
 
-
 $sqlPeliculas = "
-
-SELECT
-
-p.titulo,
-COUNT(b.id_boleto) AS vendidos,
-SUM(b.precio) AS recaudado
-
+SELECT p.titulo,
+    COUNT(b.id_boleto) AS vendidos,
+    SUM(b.precio)      AS recaudado
 FROM boleto b
-
-INNER JOIN funcion_butaca fb
-ON b.id_funcion_butaca = fb.id_funcion_butaca
-
-INNER JOIN funcion f
-ON fb.id_funcion = f.id_funcion
-
-INNER JOIN pelicula p
-ON f.id_pelicula = p.id_pelicula
-
+INNER JOIN funcion_butaca fb ON b.id_funcion_butaca = fb.id_funcion_butaca
+INNER JOIN funcion f         ON fb.id_funcion       = f.id_funcion
+INNER JOIN pelicula p        ON f.id_pelicula       = p.id_pelicula
 GROUP BY p.id_pelicula
-
 ORDER BY vendidos DESC
-
 ";
-
-$peliculas = $conn->query($sqlPeliculas);
 
 $sqlDias = "
-
-SELECT
-
-DATE(fecha) AS fecha,
-SUM(total) AS total
-
+SELECT DATE(fecha) AS fecha, SUM(total) AS total
 FROM venta
-
 WHERE estado='PAGADA'
-
 GROUP BY DATE(fecha)
-
 ORDER BY fecha DESC
-
 ";
-
-$dias = $conn->query($sqlDias);
 
 $sqlCombos = "
-
-SELECT
-
-descripcion,
-SUM(cantidad) AS vendidos,
-SUM(precio * cantidad) AS total
-
+SELECT descripcion,
+    SUM(cantidad)          AS vendidos,
+    SUM(precio * cantidad) AS total
 FROM venta_detalle
-
 WHERE tipo='COMBO'
-
 GROUP BY descripcion
-
 ORDER BY vendidos DESC
-
 ";
 
-$combos = $conn->query($sqlCombos);
-
 $resumen = $conn->query("
-
-SELECT
-
-COUNT(*) AS ventas,
-SUM(total) AS dinero
-
-FROM venta
-
-WHERE estado='PAGADA'
-
+    SELECT COUNT(*) AS ventas, SUM(total) AS dinero
+    FROM venta WHERE estado='PAGADA'
 ")->fetch_assoc();
 
 $sqlFunciones = "
-
-SELECT
-
-p.titulo,
-f.fecha,
-f.hora,
-COUNT(b.id_boleto) AS vendidos
-
+SELECT p.titulo, f.fecha, f.hora, COUNT(b.id_boleto) AS vendidos
 FROM boleto b
-
-INNER JOIN funcion_butaca fb
-ON b.id_funcion_butaca = fb.id_funcion_butaca
-
-INNER JOIN funcion f
-ON fb.id_funcion = f.id_funcion
-
-INNER JOIN pelicula p
-ON f.id_pelicula = p.id_pelicula
-
+INNER JOIN funcion_butaca fb ON b.id_funcion_butaca = fb.id_funcion_butaca
+INNER JOIN funcion f         ON fb.id_funcion       = f.id_funcion
+INNER JOIN pelicula p        ON f.id_pelicula       = p.id_pelicula
 GROUP BY f.id_funcion
-
 ORDER BY vendidos DESC
-
 LIMIT 10
-
 ";
 
+$peliculas = $conn->query($sqlPeliculas);
+$dias      = $conn->query($sqlDias);
+$combos    = $conn->query($sqlCombos);
 $funciones = $conn->query($sqlFunciones);
-
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Reportes — Cinemas Star</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <h2>🎬 Películas más vendidas</h2>
 
-    <table>
+    <header class="menu scrolled" id="navbar">
+        <a href="index.php"><img class="logo" src="Images/logo.svg" alt="Cinemas Star"></a>
+        <nav class="nav-menu">
+            <ul class="principal">
+                <li><a href="index.php" class="nav-link">← Volver</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <tr>
-            <th>Película</th>
-            <th>Boletos</th>
-            <th>Recaudación</th>
-        </tr>
+    <div class="cinema-container">
 
-        <?php while($p = $peliculas->fetch_assoc()){ ?>
+        <div class="page-header">
+            <h1>Reportes</h1>
+            <p>Panel de administración — resumen de ventas</p>
+        </div>
 
-        <tr>
-            <td><?php echo $p['titulo']; ?></td>
-            <td><?php echo $p['vendidos']; ?></td>
-            <td>$<?php echo number_format($p['recaudado'],0,",","."); ?></td>
-        </tr>
+        <!-- Tarjetas resumen -->
+        <div class="reports-grid">
+            <div class="stat-card">
+                <div class="stat-label">Ventas realizadas</div>
+                <div class="stat-value"><?= $resumen['ventas'] ?></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Ingresos totales</div>
+                <div class="stat-value red">
+                    $<?= number_format($resumen['dinero'] ?? 0, 0, ',', '.') ?>
+                </div>
+            </div>
+        </div>
 
-        <?php } ?>
+        <!-- Películas más vendidas -->
+        <div class="reports-section-title">🎬 Películas más vendidas</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Película</th>
+                    <th>Boletos vendidos</th>
+                    <th>Recaudación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($p = $peliculas->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($p['titulo']) ?></td>
+                    <td><?= $p['vendidos'] ?></td>
+                    <td style="color:var(--primary);font-weight:700;">
+                        $<?= number_format($p['recaudado'], 0, ',', '.') ?>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
 
-    </table>
+        <!-- Combos más vendidos -->
+        <div class="reports-section-title">🍿 Combos más vendidos</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Combo</th>
+                    <th>Vendidos</th>
+                    <th>Ingresos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($c = $combos->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($c['descripcion']) ?></td>
+                    <td><?= $c['vendidos'] ?></td>
+                    <td style="color:var(--primary);font-weight:700;">
+                        $<?= number_format($c['total'], 0, ',', '.') ?>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
 
-    <h2>🍿 Combos más vendidos</h2>
+        <!-- Recaudación por día -->
+        <div class="reports-section-title">💰 Recaudación por día</div>
+        <table>
+            <thead>
+                <tr><th>Fecha</th><th>Total</th></tr>
+            </thead>
+            <tbody>
+                <?php while ($d = $dias->fetch_assoc()): ?>
+                <tr>
+                    <td><?= $d['fecha'] ?></td>
+                    <td style="color:var(--primary);font-weight:700;">
+                        $<?= number_format($d['total'], 0, ',', '.') ?>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
 
-    <table>
+        <!-- Funciones más vendidas -->
+        <div class="reports-section-title">🎟 Funciones más vendidas</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Película</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Boletos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($f = $funciones->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($f['titulo']) ?></td>
+                    <td><?= $f['fecha'] ?></td>
+                    <td><?= substr($f['hora'], 0, 5) ?></td>
+                    <td><?= $f['vendidos'] ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
 
-        <tr>
-            <th>Combo</th>
-            <th>Vendidos</th>
-            <th>Ingresos</th>
-        </tr>
+        <div style="margin-top:32px;">
+            <a href="index.php" class="btn-neon">← Volver al inicio</a>
+        </div>
 
-        <?php while($c = $combos->fetch_assoc()){ ?>
+    </div>
 
-        <tr>
-            <td><?php echo $c['descripcion']; ?></td>
-            <td><?php echo $c['vendidos']; ?></td>
-            <td>$<?php echo number_format($c['total'],0,",","."); ?></td>
-        </tr>
-
-        <?php } ?>
-
-    </table>
-
-    <h2>💰 Recaudación por día</h2>
-
-    <table>
-
-        <tr>
-            <th>Fecha</th>
-            <th>Total</th>
-        </tr>
-
-        <?php while($d = $dias->fetch_assoc()){ ?>
-
-        <tr>
-            <td><?php echo $d['fecha']; ?></td>
-            <td>$<?php echo number_format($d['total'],0,",","."); ?></td>
-        </tr>
-
-        <?php } ?>
-
-    </table>
-
-    <h2>🎟 Funciones más vendidas</h2>
-
-    <table>
-
-        <tr>
-            <th>Película</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Boletos</th>
-        </tr>
-
-        <?php while($f = $funciones->fetch_assoc()){ ?>
-
-        <tr>
-            <td><?php echo $f['titulo']; ?></td>
-            <td><?php echo $f['fecha']; ?></td>
-            <td><?php echo $f['hora']; ?></td>
-            <td><?php echo $f['vendidos']; ?></td>
-        </tr>
-
-        <?php } ?>
-
-    </table>
-
-    <h2>📈 Resumen general</h2>
-
-    <p>
-        Ventas realizadas:
-        <?php echo $resumen['ventas']; ?>
-    </p>
-
-    <p>
-        Ingresos totales:
-        $
-        <?php echo number_format($resumen['dinero'] ?? 0,0,",","."); ?>
-    </p>
-
-    <a href="index.php" class="btn-neon">
-        Volver al inicio
-    </a>
+    <script src="script.js"></script>
 </body>
-
 </html>
