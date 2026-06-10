@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2026 a las 00:09:08
+-- Tiempo de generación: 10-06-2026 a las 20:46:58
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `cinema_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `administrador`
+--
+
+CREATE TABLE `administrador` (
+  `id_admin` int(11) NOT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `correo` varchar(100) DEFAULT NULL,
+  `contrasena` varchar(255) DEFAULT NULL,
+  `estado` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `administrador`
+--
+
+INSERT INTO `administrador` (`id_admin`, `nombre`, `correo`, `contrasena`, `estado`) VALUES
+(1, 'Admin', 'admin@cinemasstar.com', '$2y$10$ey64jPyFt68w2aiV9n9.u.9xADjkg/VyOY6LAw1TjQ0XIiUjb4yF.', 'activo');
 
 -- --------------------------------------------------------
 
@@ -198,7 +219,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `nombre`, `correo`, `contrasena`, `telefono`, `fecha_registro`) VALUES
-(1, 'camilo', 'der@prueba.com', '$2y$10$uy.7oboedWtAacoF.gON..WexNFjhWF9Y5PkjdHVumscBqDAmOKTG', '12412423', '2026-06-06');
+(1, 'camilo', 'cliente@prueba.com', '$2y$10$uy.7oboedWtAacoF.gON..WexNFjhWF9Y5PkjdHVumscBqDAmOKTG', '12412423', '2026-06-06');
 
 -- --------------------------------------------------------
 
@@ -1208,6 +1229,35 @@ INSERT INTO `pelicula` (`id_pelicula`, `titulo`, `duracion`, `clasificacion`, `s
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `producto`
+--
+
+CREATE TABLE `producto` (
+  `id_producto` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `imagen` varchar(255) NOT NULL,
+  `categoria` varchar(50) NOT NULL,
+  `estado` varchar(20) DEFAULT 'Disponible'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id_producto`, `nombre`, `descripcion`, `precio`, `imagen`, `categoria`, `estado`) VALUES
+(1, 'Combo Amigos', 'Palomitas grandes + 2 gaseosas medianas', 35000.00, 'Images/combo_pareja.jpg', 'Combo', 'Disponible'),
+(2, 'Combo Familiar', '2 Palomitas grandes + 4 gaseosas ', 65000.00, 'Images/combo_familiar.jpg', 'Combo', 'Disponible'),
+(3, 'Combo Fan', 'Palomitas medianas+ 2 Gaseosa + Perro caliente +Gomitas + Nachos', 58000.00, 'Images/combo_fan.png', 'Combo', 'Disponible'),
+(4, 'Nachos con queso', 'Nachos con salsa de queso', 15000.00, 'Images/nachos.png', 'Comida', 'Disponible'),
+(5, 'Perro caliente', 'Perro caliente con papas', 18000.00, 'Images/perro.png', 'Comida', 'Disponible'),
+(6, 'Palomitas grandes', 'Palomitas tamaño grande', 12000.00, 'Images/palomitas_grandes.png', 'Comida', 'Disponible'),
+(7, 'Gaseosa grande', 'Gaseosa fría tamaño grande', 8000.00, 'Images/gaseosa_grande.jpg', 'Bebida', 'Disponible');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `sala`
 --
 
@@ -1225,9 +1275,89 @@ INSERT INTO `sala` (`id_sala`, `nombre`, `capacidad`) VALUES
 (1, 'Sala 1', 40),
 (2, 'Sala 2', 50);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `venta`
+--
+
+CREATE TABLE `venta` (
+  `id_venta` int(11) NOT NULL,
+  `fecha` datetime DEFAULT current_timestamp(),
+  `total` decimal(10,2) DEFAULT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `estado` varchar(20) NOT NULL DEFAULT 'PENDIENTE'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `venta`
+--
+
+INSERT INTO `venta` (`id_venta`, `fecha`, `total`, `id_cliente`, `estado`) VALUES
+(1, '2026-06-06 18:45:03', 35000.00, 1, 'PAGADA'),
+(2, '2026-06-07 21:31:28', 35000.00, 1, 'PAGADA'),
+(3, '2026-06-07 21:31:57', 35000.00, 1, 'PAGADA'),
+(4, '2026-06-07 22:09:17', 35000.00, 1, 'PAGADA'),
+(5, '2026-06-08 00:10:45', 65000.00, 1, 'PAGADA'),
+(6, '2026-06-08 13:56:05', 35000.00, 1, 'PAGADA'),
+(7, '2026-06-08 14:08:15', 65000.00, 1, 'PAGADA'),
+(8, '2026-06-08 14:08:41', 35000.00, 1, 'PAGADA'),
+(9, '2026-06-08 14:40:44', 43500.00, 1, 'PAGADA'),
+(10, '2026-06-08 14:40:58', 65000.00, 1, 'PAGADA'),
+(11, '2026-06-08 23:00:07', 35000.00, 1, 'PAGADA'),
+(12, '2026-06-08 23:00:14', 65000.00, 1, 'PAGADA'),
+(13, '2026-06-08 23:00:44', 35000.00, 1, 'PAGADA'),
+(14, '2026-06-08 23:01:20', 32000.00, 1, 'PAGADA');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `venta_detalle`
+--
+
+CREATE TABLE `venta_detalle` (
+  `id_detalle` int(11) NOT NULL,
+  `id_venta` int(11) DEFAULT NULL,
+  `tipo` varchar(30) DEFAULT NULL,
+  `descripcion` varchar(100) DEFAULT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `precio` decimal(10,2) DEFAULT NULL,
+  `id_producto` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `venta_detalle`
+--
+
+INSERT INTO `venta_detalle` (`id_detalle`, `id_venta`, `tipo`, `descripcion`, `cantidad`, `precio`, `id_producto`) VALUES
+(1, 1, 'BOLETO', 'Asiento cine', 1, 14500.00, NULL),
+(2, 1, 'BOLETO', 'Asiento cine', 1, 14500.00, NULL),
+(3, 2, 'BOLETO', 'Asiento cine', 1, 14500.00, NULL),
+(4, 2, 'BOLETO', 'Asiento cine', 1, 14500.00, NULL),
+(7, 1, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(8, 1, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(9, 1, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(10, 2, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(35, 3, 'BOLETO', 'Asiento B2', 1, 14500.00, NULL),
+(36, 3, 'BOLETO', 'Asiento B3', 1, 14500.00, NULL),
+(37, 3, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(38, 4, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(39, 5, 'COMBO', 'Combo Familiar', 1, 65000.00, 2),
+(40, 6, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(41, 7, 'COMBO', 'Combo Familiar', 1, 65000.00, 2),
+(44, 11, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(46, 13, 'COMBO', 'Combo Amigos', 1, 35000.00, 1),
+(47, 14, 'COMBO', 'Combo Fan', 1, 32000.00, 3);
+
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `administrador`
+--
+ALTER TABLE `administrador`
+  ADD PRIMARY KEY (`id_admin`);
 
 --
 -- Indices de la tabla `boleto`
@@ -1281,14 +1411,39 @@ ALTER TABLE `pelicula`
   ADD KEY `id_genero` (`id_genero`);
 
 --
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`id_producto`);
+
+--
 -- Indices de la tabla `sala`
 --
 ALTER TABLE `sala`
   ADD PRIMARY KEY (`id_sala`);
 
 --
+-- Indices de la tabla `venta`
+--
+ALTER TABLE `venta`
+  ADD PRIMARY KEY (`id_venta`),
+  ADD KEY `id_cliente` (`id_cliente`);
+
+--
+-- Indices de la tabla `venta_detalle`
+--
+ALTER TABLE `venta_detalle`
+  ADD PRIMARY KEY (`id_detalle`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `administrador`
+--
+ALTER TABLE `administrador`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `boleto`
@@ -1333,10 +1488,28 @@ ALTER TABLE `pelicula`
   MODIFY `id_pelicula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT de la tabla `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT de la tabla `sala`
 --
 ALTER TABLE `sala`
   MODIFY `id_sala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `venta`
+--
+ALTER TABLE `venta`
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `venta_detalle`
+--
+ALTER TABLE `venta_detalle`
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- Restricciones para tablas volcadas
@@ -1374,6 +1547,12 @@ ALTER TABLE `funcion_butaca`
 --
 ALTER TABLE `pelicula`
   ADD CONSTRAINT `pelicula_ibfk_1` FOREIGN KEY (`id_genero`) REFERENCES `genero` (`id_genero`);
+
+--
+-- Filtros para la tabla `venta`
+--
+ALTER TABLE `venta`
+  ADD CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
